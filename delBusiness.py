@@ -17,8 +17,6 @@ class Murano_Script(object):
         self.HOST = "https://{}/api:1".format(self.BP_HOST)
 
     def get_business(self, token):
-        # with open('business.json') as f:
-        #     self.response = json.load(f)
         route = "/user/{}/membership/".format(self.EMAIL)
         self.HEADER.update({'authorization': 'token {}'.format(token)})
         response = requests.get(self.HOST + route, headers=self.HEADER)
@@ -39,28 +37,30 @@ class Murano_Script(object):
         return token
 
     def delete_business(self, businessInfo):
+        self.overdue = {}
         print "     - Delete Business: {0} -> {1}".format(businessInfo['bizid'], businessInfo['name'])
         resp = requests.delete(
             "{}/business/{}".format(self.HOST, businessInfo['bizid']),
             headers=self.HEADER)
         if resp.status_code != 205:
-            print (resp.content)
-            print "      * Delete Failed: {0} ".format(resp.status_code, resp.content)
+            if resp.status_code == 409 and resp.error == 'overdue':
+                self.overdue.update(
+                        {businessInfo['bizid']: businessInfo['name']})
+            print "      * Delete Failed: {0} -> {1}".format(resp.status_code, resp.content)
             return False
         return True
 
     def delete_business_by_list(self, deleteList):
         token = self.get_user_token()
         business_IDs = self.get_business(token)
-        # self.HEADER.update({'authorization': 'token 1dc59412618e39ebfcfb9ef95c35464f02fa6844'})
         for item in deleteList:
             re_item = re.compile(item)
-            testing_members = filter(lambda i: re_item.search(
-                i['name']) is not None, business_IDs)
+            testing_members = filter(lambda i: re_item.search(i['name']) is not None, business_IDs)
             print '-- There are {0} test business meet the rules: {1}'.format(len(testing_members), item)
             print '-- # Start to delete business, please be patient...'
             output = map(self.delete_business, testing_members)
             print '-- Delete: {0}, Failed: {1}'.format(output.count(True), output.count(False))
+            print 'Overdue business: {0}'.format(self.overdue)
 
 
 murano = Murano_Script()
