@@ -11,12 +11,8 @@ import csv
 
 class Murano_Script(object):
     def __init__(self):
-        self.COMPANY = 'qa-exchange-testing'
-        # self.COMPANY = 'Staging Testing Business'
-        # self.COMPANY = '2017 Enterprise Business 01'
-        self.COMPANY_ID = '8qq86je1dxk'
-        # self.COMPANY_ID = 'loz8gtd7hcmims4i'
-        # self.COMPANY_ID = 'fmh4l7iu9hu59udi'
+        self.COMPANY = 'dqa-adc-testing'
+        self.COMPANY_ID = '9i0iddvy9ro'
         self.SOLUTION_HOST = 'apps.exosite-staging.io'
         self.BP_HOST = "bizapi-staging.hosted.exosite.io"
         self.EMAIL = 'testing@exosite.com'
