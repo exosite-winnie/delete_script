@@ -43,9 +43,9 @@ class Murano_Script(object):
             "{}/business/{}".format(self.HOST, businessInfo['bizid']),
             headers=self.HEADER)
         if resp.status_code != 205:
-            if resp.status_code == 409 and resp.error == 'overdue':
-                self.overdue.update(
-                        {businessInfo['bizid']: businessInfo['name']})
+#             if resp.status_code == 409 and resp.error == 'overdue':
+#                 self.overdue.update(
+#                         {businessInfo['bizid']: businessInfo['name']})
             print "      * Delete Failed: {0} -> {1}".format(resp.status_code, resp.content)
             return False
         return True
