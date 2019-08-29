@@ -66,8 +66,7 @@ class Murano_Script(object):
 murano = Murano_Script()
 
 deleteList = [
-    "^testing\d+",
-    "^testing-\d+",
-    "\<script\>alert\(Test update script\)\</script\>"
+    "^qa-\d+",
+    "^testing-\d+"
 ]
 data = murano.delete_business_by_list(deleteList)
