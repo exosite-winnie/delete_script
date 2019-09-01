@@ -61,10 +61,10 @@ class Murano_Script(object):
         solutions = self.get_solutions()
 
         for item in domainList:
-            # re_item = re.compile(item)
-            # testingSolution = filter(lambda i: re_item.search(i['label']), solutions)
-            print '-- There are {0} test solution in {1} need to delete.'.format(len(solutions), self.COMPANY)
-            output = map(self.delete_solution, solutions)
+            re_item = re.compile(item)
+            testingSolution = filter(lambda i: re_item.search(i['label']), solutions)
+            print '-- There are {0} test solution in {1} need to delete.'.format(len(testingSolution), self.COMPANY)
+            output = map(self.delete_solution, testingSolution)
             print '-- Delete: {0}, Failed: {1}'.format(output.count(True), output.count(False))
 
 
